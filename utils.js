@@ -30,6 +30,10 @@ function recordPosition(pos, player) {
   board[pos] = player.toUpperCase();
 }
 
+function undoPosition(pos) {
+  board[pos] = " ";
+}
+
 function checkWin(player) {
   return winningCombos.some((combo) =>
     combo.every((position) => board[position] === player)
@@ -39,6 +43,19 @@ function checkWin(player) {
 function checkTie() {
   return !Object.values(board).includes(" ");
 }
+
+function getAvailablePositions() {
+  return Object.keys(board).filter((pos) => board[pos] === " ");
+}
+
+function randomComputerMove() {
+  const availablePos = getAvailablePositions();
+  const randomIndex = Math.floor(Math.random() * availablePos.length);
+
+  return availablePos[randomIndex];
+}
+
+// TO DO: make computer move smarter by trying to anticipate best/winning moves
 
 function printBoard() {
   console.log(
@@ -74,4 +91,6 @@ module.exports = {
   recordPosition,
   printBoard,
   validateMove,
+  getAvailablePositions,
+  randomComputerMove
 };
